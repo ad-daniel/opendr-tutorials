@@ -21,7 +21,7 @@ from opendr.perception.object_detection_2d import RetinaFaceLearner
 robot = Robot()
 timestep = int(robot.getBasicTimeStep())
 
-learner = RetinaFaceLearner(backbone='resnet', device='cuda')
+learner = RetinaFaceLearner(backbone='resnet', device='cpu')
 learner.download('.', mode='pretrained')
 learner.load('./retinaface_{}'.format('resnet'))
 
