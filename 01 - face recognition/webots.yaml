@@ -1,3 +1,0 @@
-publish: true
-type: demo
-dockerCompose:theia:webots-project/controllers/
