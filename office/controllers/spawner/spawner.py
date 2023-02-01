@@ -7,7 +7,7 @@ root_node = robot.getRoot()
 root_children_field = root_node.getField('children')
 
 objects = ['BeerBottle', 'WaterBottle', 'Can', 'Book']
-translations = [[-0.7, 0.5, 0.7], [-0.7, 0.5, 0.7], [-0.7, 0.5, 0.7], [-0.7, 0.5, 0.7]]
+translations = [[-0.7, 0.5, 0.7], [-0.7, 0.5, 0.7], [-0.7, 0.5, 0.7], [-0.7, 0.5, 0.8]]
 
 i = 0
 j = 0

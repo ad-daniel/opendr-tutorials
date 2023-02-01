@@ -14,20 +14,28 @@
 
 from controller import Robot, Camera
 
-#from opendr.engine.data import Image
-#from opendr.perception.object_detection_2d import RetinaFaceLearner
+from opendr.engine.data import Image
+from opendr.perception.object_detection_2d import NanodetLearner
+import numpy as np
 
 robot = Robot()
 timestep = int(robot.getBasicTimeStep())
 
-#learner = RetinaFaceLearner(backbone='resnet', device='cpu')
+learner = NanodetLearner(model_to_use='m', device='cpu')
 #learner.download('.', mode='pretrained')
-#learner.load('./retinaface_{}'.format('resnet'))
+learner.load("./nanodet_m", verbose=True)
 
 camera = Camera("camera")
 camera.enable(2 * timestep)
+print(camera.getWidth(), camera.getHeight())
 
 while robot.step(timestep) != -1:
     image = camera.getImage()
-    if not image:
-        continue
+    if image:
+        frame = np.frombuffer(image, np.uint8).reshape((camera.getHeight(), camera.getWidth(), 4))
+        frame = frame[:, :, :3]
+        (h, w) = frame.shape[:2]
+
+        img = Image(frame)
+        boxes = learner.infer(input=img)
+        print(boxes)
