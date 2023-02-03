@@ -16,18 +16,21 @@ from controller import Robot, Camera
 
 from opendr.engine.data import Image
 from opendr.perception.object_detection_2d import NanodetLearner
+from opendr.perception.object_detection_2d import draw_bounding_boxes
+import cv2
+from opendr.perception.object_detection_2d.datasets.transforms import BoundingBoxListToNumpyArray
+
 import numpy as np
 
 robot = Robot()
 timestep = int(robot.getBasicTimeStep())
 
 learner = NanodetLearner(model_to_use='m', device='cpu')
-#learner.download('.', mode='pretrained')
 learner.load("./nanodet_m", verbose=True)
 
 camera = Camera("camera")
 camera.enable(2 * timestep)
-print(camera.getWidth(), camera.getHeight())
+print(camera.getWidth(), camera.getHeight(), learner.classes)
 
 while robot.step(timestep) != -1:
     image = camera.getImage()
@@ -38,4 +41,13 @@ while robot.step(timestep) != -1:
 
         img = Image(frame)
         boxes = learner.infer(input=img)
-        print(boxes)
+        if len(boxes) > 0:
+            bb = boxes[0].coco()
+            #bb = BoundingBoxListToNumpyArray()(boxes)
+            #id = np.int32(bb[:, 5].astype(np.int))
+            #print('class:', learner.classes[id[0]])
+            #print('score:', bb[:, 4])
+            print('bounding box:', bb['bbox'])
+            print('class:', learner.classes[bb['category_id']], 'confidence:', boxes[0].confidence)
+            out = draw_bounding_boxes(img.opencv(), boxes, class_names=learner.classes)
+            cv2.imwrite('test.jpg', out)

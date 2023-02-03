@@ -7,12 +7,13 @@ root_node = robot.getRoot()
 root_children_field = root_node.getField('children')
 
 objects = ['BeerBottle', 'WaterBottle', 'Can', 'Book']
-translations = [[-0.7, 0.5, 0.7], [-0.7, 0.5, 0.7], [-0.7, 0.5, 0.7], [-0.7, 0.5, 0.8]]
+translations = [[-1.0, 0.5, 0.7], [-0.7, 0.5, 0.7], [-0.7, 0.5, 0.7], [-0.7, 0.5, 0.8]]
 
 i = 0
 j = 0
 DURATION = 50
 first_run = True
+
 while robot.step(timestep) != -1:
     if i == 0:
         if not first_run:
