@@ -12,13 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from controller import Robot, Display, Camera
+from controller import Supervisor, Display, Camera
 from opendr.engine.data import Image
 from opendr.perception.object_detection_2d import NanodetLearner
 import numpy as np
 import os
 import base64
-
 
 def sendDisplayImage(robot, display):
     """Send display image to the robot window"""
@@ -31,7 +30,7 @@ def sendDisplayImage(robot, display):
 
 displayImagePath = os.getcwd() + '/display.jpg'
 
-robot = Robot()
+robot = Supervisor()
 timestep = int(robot.getBasicTimeStep())
 
 learner = NanodetLearner(model_to_use='m', device='cpu')
@@ -46,9 +45,23 @@ print(width, height, learner.classes)
 display = robot.getDevice('display')
 display.setFont('Lucida Console', 15, True)
 
+root_node = robot.getRoot()
+root_children_field = root_node.getField('children')
+
 current_detection = None
 while robot.step(timestep) != -1:
     image = camera.getImage()
+
+    # retrieve messages from robot window
+    message = robot.wwiReceiveText()
+    while message:
+        if message.startswith('spawn:'):
+            target = robot.getFromDef('TARGET')
+            if target:
+                target.remove()
+            root_children_field.importMFNodeFromString(-1, f'DEF TARGET {message[6:]} {{}}')
+            message = robot.wwiReceiveText()
+
 
     if image:
         frame = np.frombuffer(image, np.uint8).reshape((height, width, 4))
@@ -78,8 +91,8 @@ while robot.step(timestep) != -1:
             sendDisplayImage(robot, display)
             display.imageDelete(ir)
 
-            print('bounding box:', bb['bbox'])
-            print('class:', learner.classes[bb['category_id']], 'confidence:', boxes[0].confidence)
+            #print('bounding box:', bb['bbox'])
+            #print('class:', learner.classes[bb['category_id']], 'confidence:', boxes[0].confidence)
 
 # cleanup
 if (os.path.exists(displayImagePath)):
