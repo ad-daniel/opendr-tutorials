@@ -1,6 +1,6 @@
 import RobotWindow from 'https://cyberbotics.com/wwi/R2023a/RobotWindow.js';
 
-window.buttonCallback =  function(obj) {
+window.spawnerButtonCallback =  function(obj) {
   const collection = document.getElementsByClassName("spawner-option");
   for (let i = 0; i < collection.length; ++i) {
     collection[i].style.background = "white"
@@ -10,6 +10,11 @@ window.buttonCallback =  function(obj) {
 
   console.log('spawn:' + obj.innerText);
   window.robotWindow.send('spawn:' + obj.innerText);
+}
+
+window.moveButtonCallback =  function(obj) {
+  console.log('move:' + obj.innerText);
+  window.robotWindow.send('move:' + obj.innerText);
 }
 
 

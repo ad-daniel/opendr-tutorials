@@ -11,14 +11,16 @@
       <h2>Camera</h2>
       <img id='robot-display' alt='Image not available. Please start the simulation.' width="640" height="480">
       <h2>Jetbot controller</h2>
+      <button class="move" onclick="moveButtonCallback(this)">Forward</button>
+      <button class="move" onclick="moveButtonCallback(this)">Back</button>
       <h2>Spawner</h2>
-      <button class="spawner-option" onclick="buttonCallback(this)">Keyboard</button>
-      <button class="spawner-option" onclick="buttonCallback(this)">BeerBottle</button>
-      <button class="spawner-option" onclick="buttonCallback(this)">Laptop</button>
-      <button class="spawner-option" onclick="buttonCallback(this)">Cat</button>
-      <button class="spawner-option" onclick="buttonCallback(this)">FlowerPot</button>
-      <button class="spawner-option" onclick="buttonCallback(this)">Clock</button>
-      <button class="spawner-option" onclick="buttonCallback(this)">Book</button>
+      <button class="spawner-option" onclick="spawnerButtonCallback(this)">Keyboard</button>
+      <button class="spawner-option" onclick="spawnerButtonCallback(this)">BeerBottle</button>
+      <button class="spawner-option" onclick="spawnerButtonCallback(this)">Laptop</button>
+      <button class="spawner-option" onclick="spawnerButtonCallback(this)">Cat</button>
+      <button class="spawner-option" onclick="spawnerButtonCallback(this)">FlowerPot</button>
+      <button class="spawner-option" onclick="spawnerButtonCallback(this)">Clock</button>
+      <button class="spawner-option" onclick="spawnerButtonCallback(this)">Book</button>
     </div>
     <script type="module" src="jetbot_view.js"></script>
   </body>

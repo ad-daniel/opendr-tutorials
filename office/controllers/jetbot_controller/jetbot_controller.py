@@ -19,6 +19,9 @@ import numpy as np
 import os
 import base64
 
+POSITION_INCREMENT = 1
+ROTATION_INCREMENT = 1
+
 
 models = {
     'Keyboard': 'translation -0.7 0.5 0.52 rotation 0 1 0 -0.12',
@@ -29,7 +32,6 @@ models = {
     'FlowerPot': 'translation -0.71 0.49 0.53 rotation 0 1 0 0',
     'Clock': 'translation -0.54 0.46 0.67 rotation 0 0 1 2.618',
     'Book': 'translation -0.51 0.52 0.51 rotation -0.12 -1 -0.12 1.58',
-
 }
 
 
@@ -42,6 +44,16 @@ def spawn_object(name):
     root_children_field.importMFNodeFromString(-1, f'DEF TARGET {name} {{ {models[name]} }}')
 
 
+def move_robot(action):
+    print('got', action)
+    # remove existing node
+    if action == 'Forward':
+        motors[0].setPosition(motors[0].getTargetPosition() + POSITION_INCREMENT)
+        motors[1].setPosition(motors[1].getTargetPosition() + POSITION_INCREMENT)
+    elif action == 'Back':
+        motors[0].setPosition(motors[0].getTargetPosition() - POSITION_INCREMENT)
+        motors[1].setPosition(motors[1].getTargetPosition() - POSITION_INCREMENT)
+
 def sendDisplayImage(robot, display):
     """Send display image to the robot window"""
     display.imageSave(None, displayImagePath)
@@ -50,11 +62,17 @@ def sendDisplayImage(robot, display):
         fileString64 = base64.b64encode(f.read()).decode()
         robot.wwiSendText('image[display]]:data:image/jpeg;base64,' + fileString64)
 
-
 displayImagePath = os.getcwd() + '/display.jpg'
 
 robot = Supervisor()
 timestep = int(robot.getBasicTimeStep())
+
+motors = []
+motors.append(robot.getDevice('left_wheel_hinge'))
+motors.append(robot.getDevice('right_wheel_hinge'))
+for i in range(2):
+    motors[i].setPosition(0)
+    motors[i].setVelocity(1)
 
 learner = NanodetLearner(model_to_use='m', device='cpu')
 learner.load("./nanodet_m", verbose=True)
@@ -80,7 +98,10 @@ while robot.step(timestep) != -1:
     while message:
         if message.startswith('spawn:'):
             spawn_object(message[6:])
-            message = robot.wwiReceiveText()
+        elif message.startswith('move:'):
+            move_robot(message[5:])
+
+        message = robot.wwiReceiveText()
 
     if image:
         frame = np.frombuffer(image, np.uint8).reshape((height, width, 4))
