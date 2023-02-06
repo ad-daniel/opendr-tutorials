@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from controller import Robot, Camera, Node
+from controller import Robot, Display, Camera, Node
 
 from opendr.engine.data import Image
 from opendr.perception.object_detection_2d import NanodetLearner
@@ -60,11 +60,11 @@ print(camera.getWidth(), camera.getHeight(), learner.classes)
 
 # Get the display device.
 display = robot.getDevice('display')
-display.attachCamera(camera)
-display.setColor(0xFF0000)
+display.setFont('Lucida Console', 15, True)
+#display.setColor(0xFF0000)
 
 current_bbox = None
-
+print('start main loop')
 while robot.step(timestep) != -1:
     image = camera.getImage()
 
@@ -84,17 +84,21 @@ while robot.step(timestep) != -1:
             bb = boxes[0].coco()
             current_bbox = bb['bbox']
             # Show detected blob in the display: draw the circle and centroid.
+            ir = display.imageNew(image, Display.BGRA, camera.getWidth(), camera.getHeight())
+            display.imagePaste(ir, 0, 0, False)
             display.setAlpha(1.0)
             display.setColor(0x00FFFF)
             display.drawRectangle(current_bbox[0], current_bbox[1], current_bbox[2], current_bbox[3])
+            display.drawText(learner.classes[bb['category_id']], current_bbox[0], current_bbox[1] - 20)
             display.setColor(0xFF0000)
 
             sendDeviceImage(robot, display)
+            display.imageDelete(ir)
 
             print('bounding box:', bb['bbox'])
             print('class:', learner.classes[bb['category_id']], 'confidence:', boxes[0].confidence)
-            out = draw_bounding_boxes(img.opencv(), boxes, class_names=learner.classes)
-            cv2.imwrite('test.jpg', out)
+            #out = draw_bounding_boxes(img.opencv(), boxes, class_names=learner.classes)
+            #cv2.imwrite('test.jpg', out)
 
 
 # Cleanup code.
