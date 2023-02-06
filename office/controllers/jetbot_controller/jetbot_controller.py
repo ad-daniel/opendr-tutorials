@@ -19,6 +19,29 @@ import numpy as np
 import os
 import base64
 
+
+models = {
+    'Keyboard': 'translation -0.7 0.5 0.52 rotation 0 1 0 -0.12',
+    'Laptop': 'translation -0.58 0.5 0.5 rotation 0 0 1 -2.16 controller "<none>"',
+    'BeerBottle': 'translation -0.58 0.5 0.5 rotation 0 1 0 0',
+    'Cat': 'translation -0.62 0.46 0.56 rotation 0 0 1 -2.88 scale 0.75',
+    'SoccerBall': 'translation 0 0 0 rotation 0 1 0 0',
+    'FlowerPot': 'translation -0.71 0.49 0.53 rotation 0 1 0 0',
+    'Clock': 'translation -0.54 0.46 0.67 rotation 0 0 1 2.618',
+    'Book': 'translation -0.51 0.52 0.51 rotation -0.12 -1 -0.12 1.58',
+
+}
+
+
+def spawn_object(name):
+    # remove existing node
+    target = robot.getFromDef('TARGET')
+    if target:
+        target.remove()
+    # spawn new object
+    root_children_field.importMFNodeFromString(-1, f'DEF TARGET {name} {{ {models[name]} }}')
+
+
 def sendDisplayImage(robot, display):
     """Send display image to the robot window"""
     display.imageSave(None, displayImagePath)
@@ -56,12 +79,8 @@ while robot.step(timestep) != -1:
     message = robot.wwiReceiveText()
     while message:
         if message.startswith('spawn:'):
-            target = robot.getFromDef('TARGET')
-            if target:
-                target.remove()
-            root_children_field.importMFNodeFromString(-1, f'DEF TARGET {message[6:]} {{}}')
+            spawn_object(message[6:])
             message = robot.wwiReceiveText()
-
 
     if image:
         frame = np.frombuffer(image, np.uint8).reshape((height, width, 4))
@@ -72,6 +91,7 @@ while robot.step(timestep) != -1:
             # erase the previous drawing by setting the pixels alpha value to 0 (transparent).
             display.setAlpha(0.0)
             display.drawRectangle(current_detection[0], current_detection[1], current_detection[2], current_detection[3])
+            current_detection = None
 
         img = Image(frame)
         boxes = learner.infer(input=img)
@@ -79,20 +99,25 @@ while robot.step(timestep) != -1:
             bb = boxes[0].coco()
             current_detection = bb['bbox']
 
-            # show detection in the display
             ir = display.imageNew(image, Display.BGRA, width, height)
             display.imagePaste(ir, 0, 0, False)
-            display.setAlpha(1.0)
-            display.setColor(0x00FFFF)
-            display.drawRectangle(current_detection[0], current_detection[1], current_detection[2], current_detection[3])
-            display.drawText(learner.classes[bb['category_id']], current_detection[0], current_detection[1] - 20)
-            display.setColor(0xFF0000)
+
+            for i in range(len(boxes)):
+                if learner.classes[bb['category_id']] == 'dining_table' or float(boxes[i].confidence) < 0.5:
+                    continue
+
+                # show detection in the display
+                display.setAlpha(1.0)
+                display.setColor(0x00FFFF)
+                display.drawRectangle(current_detection[0], current_detection[1], current_detection[2], current_detection[3])
+                display.drawText(learner.classes[bb['category_id']], current_detection[0], current_detection[1] - 20)
+                display.setColor(0xFF0000)
+
+                #print('bounding box:', bb['bbox'])
+                print('class:', learner.classes[bb['category_id']], 'confidence:', boxes[0].confidence)
 
             sendDisplayImage(robot, display)
             display.imageDelete(ir)
-
-            #print('bounding box:', bb['bbox'])
-            #print('class:', learner.classes[bb['category_id']], 'confidence:', boxes[0].confidence)
 
 # cleanup
 if (os.path.exists(displayImagePath)):
