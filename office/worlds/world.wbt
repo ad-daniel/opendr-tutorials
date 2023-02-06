@@ -441,12 +441,19 @@ Table {
 JetBot {
   translation -5.59 0.49 0.74
   controller "jetbot_controller"
+  window "jetbot_view"
   cameraSlot JetBotRaspberryPiCamera {
     rotation 0 1 0 0.316799
     fieldOfView 1.0856
     width 640
     height 480
   }
+  extensionSlot [
+    Display {
+      width 640
+      height 480
+    }
+  ]
 }
 Table {
   translation -3.83 0.5 0
