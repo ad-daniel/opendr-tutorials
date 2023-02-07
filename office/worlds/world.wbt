@@ -35,12 +35,11 @@ WorldInfo {
   info [
     "An office break room, surrounded by office desks."
   ]
-  basicTimeStep 32
 }
 Viewpoint {
   fieldOfView 0.5
   orientation -0.22717578214120018 0.5061979886469467 0.8319583885617835 0.9792322426613529
-  position -5.691057046678003 -4.8155898078350905 5.136590055100788
+  position -5.540635270522102 -4.679294257919837 5.155750134465133
   near 1
   follow "TIAGo Iron"
   followType "None"
