@@ -43,6 +43,7 @@ def spawn_object(name):
 
 def send_image_to_display(robot, display):
     """Send display image to the robot window"""
+    print('SAVING IMAGE TO:', display_image_path)
     display.imageSave(None, display_image_path)
 
     if os.path.exists(display_image_path):
@@ -56,7 +57,6 @@ def send_image_to_display(robot, display):
 
 
 display_image_path = os.getcwd() + '/display.jpg'
-print('SAVING IMAGE TO:', display_image_path)
 
 robot = Supervisor()
 timestep = int(robot.getBasicTimeStep())
