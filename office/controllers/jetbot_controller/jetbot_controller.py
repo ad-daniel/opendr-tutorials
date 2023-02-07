@@ -47,7 +47,7 @@ def send_image_to_display(robot, display):
     display.imageSave(None, display_image_path)
 
     if os.path.exists(display_image_path):
-        print('IMAGE created')
+        print('IMAGE CREATED')
     else:
         print('IMAGE NOT SAVED')
 
