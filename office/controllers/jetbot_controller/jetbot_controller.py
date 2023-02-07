@@ -43,13 +43,7 @@ def spawn_object(name):
 
 def send_image_to_display(robot, display):
     """Send display image to the robot window"""
-    print('SAVING IMAGE TO:', display_image_path)
     display.imageSave(None, display_image_path)
-
-    if os.path.exists(display_image_path):
-        print('IMAGE CREATED')
-    else:
-        print('IMAGE NOT SAVED')
 
     with open(display_image_path, 'rb') as f:
         fileString64 = base64.b64encode(f.read()).decode()
@@ -95,8 +89,6 @@ while robot.step(timestep) != -1:
         message = robot.wwiReceiveText()
 
     if image:
-        print('HERE')
-
         frame = np.frombuffer(image, np.uint8).reshape((height, width, 4))
         frame = frame[:, :, :3]
         (h, w) = frame.shape[:2]
