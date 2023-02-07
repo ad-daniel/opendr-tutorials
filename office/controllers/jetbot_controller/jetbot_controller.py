@@ -83,8 +83,6 @@ current_detection = None
 while robot.step(timestep) != -1:
     image = camera.getImage()
 
-    print('HERE')
-
     # retrieve messages from robot window
     message = robot.wwiReceiveText()
     while message:
@@ -97,6 +95,8 @@ while robot.step(timestep) != -1:
         message = robot.wwiReceiveText()
 
     if image:
+        print('HERE')
+
         frame = np.frombuffer(image, np.uint8).reshape((height, width, 4))
         frame = frame[:, :, :3]
         (h, w) = frame.shape[:2]
