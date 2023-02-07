@@ -11,4 +11,3 @@ globalOptionalRendering: CoordinateSystem
 consoles: Console:All:All
 renderingDevicePerspectives: JetBot:camera;1;0.842587;0;0.0591626
 renderingDevicePerspectives: JetBot:display;1;0.846483;0.0159091;0.047619
-renderingDevicePerspectives: laptop:display;1;1;0;0

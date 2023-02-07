@@ -17,6 +17,10 @@ window.moveButtonCallback =  function(obj) {
   window.robotWindow.send('move:' + obj.innerText);
 }
 
+window.noiseInputCallback =  function(obj) {
+  console.log('noise:', obj.value);
+  window.robotWindow.send('noise:' + obj.value);
+}
 
 // Initialize the RobotWindow class in order to communicate with the robot.
 window.onload = function() {

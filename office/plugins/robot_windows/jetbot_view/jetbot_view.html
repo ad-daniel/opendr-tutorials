@@ -10,9 +10,8 @@
     <div id='display' class='wrapper webotsTabs'>
       <h2>Camera</h2>
       <img id='robot-display' alt='Image not available. Please start the simulation.' width="640" height="480">
-      <h2>Jetbot controller</h2>
-      <button class="move" onclick="moveButtonCallback(this)">Forward</button>
-      <button class="move" onclick="moveButtonCallback(this)">Back</button>
+      <h2>Camera controls</h2>
+      <label id="noise-level">Camera noise: <input onchange="noiseInputCallback(this)" step="0.05" type="number"></label>
       <h2>Spawner</h2>
       <button class="spawner-option" onclick="spawnerButtonCallback(this)">Keyboard</button>
       <button class="spawner-option" onclick="spawnerButtonCallback(this)">BeerBottle</button>

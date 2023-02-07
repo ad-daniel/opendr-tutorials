@@ -54,15 +54,21 @@ def move_robot(action):
         motors[0].setPosition(motors[0].getTargetPosition() - POSITION_INCREMENT)
         motors[1].setPosition(motors[1].getTargetPosition() - POSITION_INCREMENT)
 
-def sendDisplayImage(robot, display):
-    """Send display image to the robot window"""
-    display.imageSave(None, displayImagePath)
 
-    with open(displayImagePath, 'rb') as f:
+def send_image_to_display(robot, display):
+    """Send display image to the robot window"""
+    display.imageSave(None, display_image_path)
+
+    if os.path.exists(display_image_path):
+        print('IMAGE created')
+
+    with open(display_image_path, 'rb') as f:
         fileString64 = base64.b64encode(f.read()).decode()
         robot.wwiSendText('image[display]]:data:image/jpeg;base64,' + fileString64)
 
-displayImagePath = os.getcwd() + '/display.jpg'
+
+display_image_path = os.getcwd() + '/display.jpg'
+print('SAVING IMAGE TO:', display_image_path)
 
 robot = Supervisor()
 timestep = int(robot.getBasicTimeStep())
@@ -137,9 +143,9 @@ while robot.step(timestep) != -1:
                 #print('bounding box:', bb['bbox'])
                 print('class:', learner.classes[bb['category_id']], 'confidence:', boxes[0].confidence)
 
-            sendDisplayImage(robot, display)
+            send_image_to_display(robot, display)
             display.imageDelete(ir)
 
 # cleanup
-if (os.path.exists(displayImagePath)):
-    os.remove(displayImagePath)
+if (os.path.exists(display_image_path)):
+    os.remove(display_image_path)

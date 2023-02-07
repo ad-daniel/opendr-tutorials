@@ -24,7 +24,7 @@ IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R20
 IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/objects/drinks/protos/BeerBottle.proto"
 IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/objects/drinks/protos/Can.proto"
 IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/objects/school_furniture/protos/Book.proto"
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/robots/nvidia/jetbot/protos/JetBotRaspberryPiCamera.proto"
+EXTERNPROTO "../protos/CustomJetBotRaspberryPiCamera.proto"
 IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/animals/protos/Cat.proto"
 IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/objects/computers/protos/Laptop.proto"
 IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/objects/plants/protos/FlowerPot.proto"
@@ -448,7 +448,7 @@ JetBot {
   controller "jetbot_controller"
   window "jetbot_view"
   supervisor TRUE
-  cameraSlot JetBotRaspberryPiCamera {
+  cameraSlot CustomJetBotRaspberryPiCamera {
     rotation 0 1 0 0.316799
     fieldOfView 1.0856
     width 640
