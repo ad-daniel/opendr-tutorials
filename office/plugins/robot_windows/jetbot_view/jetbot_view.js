@@ -2,9 +2,8 @@ import RobotWindow from 'https://cyberbotics.com/wwi/R2023a/RobotWindow.js';
 
 window.spawnerButtonCallback =  function(obj) {
   const collection = document.getElementsByClassName("spawner-option");
-  for (let i = 0; i < collection.length; ++i) {
+  for (let i = 0; i < collection.length; ++i)
     collection[i].style.background = "white"
-  }
 
   obj.style.background = "cyan";
 
@@ -12,20 +11,51 @@ window.spawnerButtonCallback =  function(obj) {
   window.robotWindow.send('spawn:' + obj.innerText);
 }
 
-window.moveButtonCallback =  function(obj) {
-  console.log('move:' + obj.innerText);
-  window.robotWindow.send('move:' + obj.innerText);
-}
-
 window.noiseInputCallback =  function(obj) {
-  console.log('noise:', obj.value);
 
   if (parseFloat(obj.value) > 0.5)
     obj.value = 0.5
   if (parseFloat(obj.value) < 0.0)
     obj.value = 0.0
 
-  window.robotWindow.send('noise:' + obj.value);
+  console.log(`noise:${obj.value}`)
+  window.robotWindow.send(`noise:${obj.value}`);
+}
+
+window.lensRadialInputCallback =  function() {
+  const element = document.getElementById("lens-radial-coefficient");
+
+  if (parseFloat(element.children[0].value) > 1.0)
+    element.children[0].value = 1.0
+  if (parseFloat(element.children[0].value) < 0.0)
+    element.children[0].value = 0.0
+
+  if (parseFloat(element.children[1].value) > 1.0)
+    element.children[1].value = 1.0
+  if (parseFloat(element.children[1].value) < 0.0)
+    element.children[1].value = 0.0
+
+  console.log('radial-coefficient:' + element.children[0].value + ',' + element.children[1].value)
+  window.robotWindow.send(`radial-coefficient:${element.children[0].value},${element.children[1].value}`);
+}
+
+window.lightPositionInputCallback =  function(obj) {
+
+  if (parseFloat(obj.value) > 0.5)
+    obj.value = 0.5
+  if (parseFloat(obj.value) < -1.5)
+    obj.value = -1.5
+
+  window.robotWindow.send(`light-position:${obj.value}`);
+}
+
+window.lightColorInputCallback =  function(obj) {
+  const red = parseInt(obj.value.substring(1, 3), 16) / 255;
+  const green = parseInt(obj.value.substring(3, 5), 16) / 255;
+  const blue = parseInt(obj.value.substring(5, 7), 16) / 255;
+
+  console.log(`light-color:${red},${green},${blue}`);
+  window.robotWindow.send(`light-color:${red},${green},${blue}`);
 }
 
 // Initialize the RobotWindow class in order to communicate with the robot.

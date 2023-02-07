@@ -11,7 +11,11 @@
       <h2>Camera</h2>
       <img id='robot-display' alt='Image not available. Please start the simulation.' width="640" height="480">
       <h2>Camera controls</h2>
-      <label id="noise-level">Camera noise: <input onchange="noiseInputCallback(this)" step="0.05" type="number"></label>
+      <label id="noise-level">Camera noise: <input onchange="noiseInputCallback(this)" step="0.025" type="number" style="width:40px" value="0"></label><br>
+      <label id="lens-radial-coefficient">Lens radial coefficient: x <input onchange="lensRadialInputCallback(this)" step="0.1" type="number" style="width:40px" value="0"> y <input onchange="lensRadialInputCallback(this)" step="0.1" type="number" style="width:40px" value="0"></label>
+      <h2>Light controls</h2>
+      <label id="light-position">Light position: <input onchange="lightPositionInputCallback(this)" step="0.5" type="number" style="width:40px" value="0.5"></label><br>
+      <label id="light-color">Light color: <input onchange="lightColorInputCallback(this)" step="0.5" type="color" style="width:40px" value="#ffffff"></label>
       <h2>Spawner</h2>
       <button class="spawner-option" onclick="spawnerButtonCallback(this)">Keyboard</button>
       <button class="spawner-option" onclick="spawnerButtonCallback(this)">BeerBottle</button>

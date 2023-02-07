@@ -7,7 +7,7 @@ centralWidgetVisible: 1
 orthographicViewHeight: 1
 textFiles: -1
 robotWindow: JetBot
-globalOptionalRendering: CoordinateSystem
+globalOptionalRendering: CoordinateSystem::JointAxes
 consoles: Console:All:All
-renderingDevicePerspectives: JetBot:camera;1;0.842587;0;0.0591626
+renderingDevicePerspectives: JetBot:camera;1;0.842587;0.00606061;0.357227
 renderingDevicePerspectives: JetBot:display;1;0.846483;0.0159091;0.047619

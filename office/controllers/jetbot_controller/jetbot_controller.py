@@ -72,8 +72,13 @@ root_children_field = root_node.getField('children')
 
 camera_node = robot.getFromDef("CAMERA")
 noise_field = camera_node.getField('noise')
-
+lens_field = camera_node.getField('lens').getSFNode().getField('radialCoefficients')
 current_detection = None
+
+light_node = robot.getFromDef("LIGHT")
+light_translation_field = light_node.getField('translation')
+light_color_field = light_node.getField('pointLightColor')
+
 while robot.step(timestep) != -1:
     image = camera.getImage()
 
@@ -83,9 +88,16 @@ while robot.step(timestep) != -1:
         if message.startswith('spawn:'):
             spawn_object(message[6:])
         elif message.startswith('noise:'):
-            print(message)
             noise_field.setSFFloat(float(message[6:]))
-
+        elif message.startswith('radial-coefficient:'):
+            value = [float(x) for x in message[19:].split(',')]
+            lens_field.setSFVec2f(value)
+        elif message.startswith('light-position:'):
+            current_position = light_translation_field.getSFVec3f()
+            light_translation_field.setSFVec3f([float(message[15:]), current_position[1], current_position[2]])
+        elif message.startswith('light-color:'):
+            value = [float(x) for x in message[12:].split(',')]
+            light_color_field.setSFColor(value)
         message = robot.wwiReceiveText()
 
     if image:
