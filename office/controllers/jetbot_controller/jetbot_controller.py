@@ -47,6 +47,8 @@ def send_image_to_display(robot, display):
 
     if os.path.exists(display_image_path):
         print('IMAGE created')
+    else:
+        print('IMAGE NOT SAVED')
 
     with open(display_image_path, 'rb') as f:
         fileString64 = base64.b64encode(f.read()).decode()
