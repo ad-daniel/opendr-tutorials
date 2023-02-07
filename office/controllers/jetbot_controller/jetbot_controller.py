@@ -19,9 +19,6 @@ import numpy as np
 import os
 import base64
 
-POSITION_INCREMENT = 1
-ROTATION_INCREMENT = 1
-
 
 models = {
     'Keyboard': 'translation -0.7 0.5 0.52 rotation 0 1 0 -0.12',
@@ -44,17 +41,6 @@ def spawn_object(name):
     root_children_field.importMFNodeFromString(-1, f'DEF TARGET {name} {{ {models[name]} }}')
 
 
-def move_robot(action):
-    print('got', action)
-    # remove existing node
-    if action == 'Forward':
-        motors[0].setPosition(motors[0].getTargetPosition() + POSITION_INCREMENT)
-        motors[1].setPosition(motors[1].getTargetPosition() + POSITION_INCREMENT)
-    elif action == 'Back':
-        motors[0].setPosition(motors[0].getTargetPosition() - POSITION_INCREMENT)
-        motors[1].setPosition(motors[1].getTargetPosition() - POSITION_INCREMENT)
-
-
 def send_image_to_display(robot, display):
     """Send display image to the robot window"""
     display.imageSave(None, display_image_path)
@@ -73,13 +59,6 @@ print('SAVING IMAGE TO:', display_image_path)
 robot = Supervisor()
 timestep = int(robot.getBasicTimeStep())
 
-motors = []
-motors.append(robot.getDevice('left_wheel_hinge'))
-motors.append(robot.getDevice('right_wheel_hinge'))
-for i in range(2):
-    motors[i].setPosition(0)
-    motors[i].setVelocity(1)
-
 learner = NanodetLearner(model_to_use='m', device='cpu')
 learner.load("./nanodet_m", verbose=True)
 
@@ -95,6 +74,9 @@ display.setFont('Lucida Console', 15, True)
 root_node = robot.getRoot()
 root_children_field = root_node.getField('children')
 
+camera_node = robot.getFromDef("CAMERA")
+noise_field = camera_node.getField('noise')
+
 current_detection = None
 while robot.step(timestep) != -1:
     image = camera.getImage()
@@ -104,8 +86,9 @@ while robot.step(timestep) != -1:
     while message:
         if message.startswith('spawn:'):
             spawn_object(message[6:])
-        elif message.startswith('move:'):
-            move_robot(message[5:])
+        elif message.startswith('noise:'):
+            print(message)
+            noise_field.setSFFloat(float(message[6:]))
 
         message = robot.wwiReceiveText()
 

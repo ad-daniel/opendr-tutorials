@@ -19,7 +19,9 @@ window.moveButtonCallback =  function(obj) {
 
 window.noiseInputCallback =  function(obj) {
   console.log('noise:', obj.value);
-  window.robotWindow.send('noise:' + obj.value);
+
+  if (parseFloat(obj.value) < 0.5 && parseFloat(obj.value) > 0.0)
+    window.robotWindow.send('noise:' + obj.value);
 }
 
 // Initialize the RobotWindow class in order to communicate with the robot.

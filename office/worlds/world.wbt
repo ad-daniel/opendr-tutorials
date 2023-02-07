@@ -448,7 +448,7 @@ JetBot {
   controller "jetbot_controller"
   window "jetbot_view"
   supervisor TRUE
-  cameraSlot CustomJetBotRaspberryPiCamera {
+  cameraSlot DEF CAMERA CustomJetBotRaspberryPiCamera {
     rotation 0 1 0 0.316799
     fieldOfView 1.0856
     width 640
