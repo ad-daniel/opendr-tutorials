@@ -109,12 +109,13 @@ while robot.step(timestep) != -1:
 
         img = Image(frame)
         boxes = learner.infer(input=img)
+
+        ir = display.imageNew(image, Display.BGRA, width, height)
+        display.imagePaste(ir, 0, 0, False)
+
         if len(boxes) > 0:
             bb = boxes[0].coco()
             current_detection = bb['bbox']
-
-            ir = display.imageNew(image, Display.BGRA, width, height)
-            display.imagePaste(ir, 0, 0, False)
 
             for i in range(len(boxes)):
                 if learner.classes[bb['category_id']] == 'dining_table' or float(boxes[i].confidence) < 0.5:
@@ -130,8 +131,8 @@ while robot.step(timestep) != -1:
                 #print('bounding box:', bb['bbox'])
                 print('class:', learner.classes[bb['category_id']], 'confidence:', boxes[0].confidence)
 
-            send_image_to_display(robot, display)
-            display.imageDelete(ir)
+        send_image_to_display(robot, display)
+        display.imageDelete(ir)
 
 # cleanup
 if (os.path.exists(display_image_path)):
