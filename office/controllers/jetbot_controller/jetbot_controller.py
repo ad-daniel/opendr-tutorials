@@ -83,6 +83,8 @@ current_detection = None
 while robot.step(timestep) != -1:
     image = camera.getImage()
 
+    print('HERE')
+
     # retrieve messages from robot window
     message = robot.wwiReceiveText()
     while message:
