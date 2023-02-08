@@ -6,10 +6,7 @@ maximizedDockId: -1
 centralWidgetVisible: 1
 orthographicViewHeight: 1
 textFiles: -1
-<<<<<<< HEAD
-=======
 robotWindow: JetBot
->>>>>>> 78a0a06fd59f7484c0e88d05d91ddf6aaf3f79f8
 globalOptionalRendering: CoordinateSystem
 consoles: Console:All:All
 renderingDevicePerspectives: JetBot:camera;1;0.895833;0;0

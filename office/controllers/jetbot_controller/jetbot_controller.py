@@ -22,11 +22,11 @@ import base64
 TIMESTEP = 64
 DISPLAY_IMAGE_PATH = os.getcwd() + '/display.jpg'
 LOCATIONS = {
-    'Keyboard': [-0.7, 0.5, 0.52],
+    'Keyboard': [-0.6, 0.5, 0.53],
     'Laptop': [-0.58, 0.5, 0.5],
     'BeerBottle': [-0.42, 0.49, 0.5],
     'Cat': [-0.57, 0.40, 0.56],
-    'FlowerPot': [-0.71, 0.49, 0.53],
+    'FlowerPot': [-0.67, 0.51, 0.53],
     'Clock': [-0.54, 0.46, 0.67],
     'TennisRacket': [-0.53, 0.42, 0.62]
 }
