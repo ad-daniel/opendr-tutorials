@@ -55,8 +55,10 @@ def handle_wwi_messages():
             value = [float(x) for x in message[19:].split(',')]
             lens_field.setSFVec2f(value)
         elif message.startswith('light-position:'):
-            current_position = light_translation_field.getSFVec3f()
-            light_translation_field.setSFVec3f([float(message[15:]), current_position[1], current_position[2]])
+            value = [float(x) for x in message[15:].split(',')]
+            light_location_field.setSFVec3f(value)
+        elif message.startswith('light-intensity:'):
+            light_intensity_field.setSFFloat(float(message[16:]))
         elif message.startswith('light-color:'):
             value = [float(x) for x in message[12:].split(',')]
             light_color_field.setSFColor(value)
@@ -80,8 +82,9 @@ lens_field = camera_node.getField('lens').getSFNode().getField('radialCoefficien
 current_detection = None
 
 light_node = robot.getFromDef("LIGHT")
-light_translation_field = light_node.getField('translation')
-light_color_field = light_node.getField('pointLightColor')
+light_location_field = light_node.getField('location')
+light_intensity_field = light_node.getField('intensity')
+light_color_field = light_node.getField('color')
 
 robot.step(TIMESTEP)
 

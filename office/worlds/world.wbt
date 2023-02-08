@@ -36,8 +36,8 @@ WorldInfo {
 }
 Viewpoint {
   fieldOfView 0.5
-  orientation 0.2422960378048716 0.5294219059130788 -0.8130221864152436 1.0347669812422486
-  position -6.557890183061742 7.115974711644057 6.714175553012122
+  orientation -0.282215050834881 0.7872029987158445 0.5483302872311976 1.149944103758308
+  position -6.769375567773776 -4.582130852612174 11.946518037874705
   near 1
   follow "TIAGo Iron"
   followType "None"
@@ -75,15 +75,6 @@ CeilingLight {
   translation -2.74 4.78 2.5
   rotation 1 0 0 4.692820414042842e-06
   name "ceiling light(5)"
-  bulbColor 0.913725 0.72549 0.431373
-  supportColor 0.533333 0.541176 0.521569
-  pointLightIntensity 3
-  castShadows FALSE
-}
-DEF LIGHT CeilingLight {
-  translation 0.5 0.31 2.5
-  rotation 1 0 0 4.692820414042842e-06
-  name "ceiling light(1)"
   bulbColor 0.913725 0.72549 0.431373
   supportColor 0.533333 0.541176 0.521569
   pointLightIntensity 3
@@ -546,6 +537,11 @@ Solid {
   ]
   name "solid(1)"
 }
+DEF LIGHT PointLight {
+  attenuation 0 0 1
+  intensity 3
+  location 0 0.5 2
+}
 DEF LAPTOP Laptop {
   translation 0 0 -2
   rotation 0 0 1 -2.16
@@ -576,5 +572,5 @@ DEF CLOCK Clock {
 }
 DEF TENNISRACKET TennisRacket {
   translation 0 0 -2
-  rotation -0.07 -0.79 -0.6 1.04
+  rotation -0.0703882056486655 -0.7943811780349392 -0.6033274769885614 1.04
 }

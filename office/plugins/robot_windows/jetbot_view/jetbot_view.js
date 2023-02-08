@@ -40,13 +40,12 @@ window.lensRadialInputCallback =  function() {
 }
 
 window.lightPositionInputCallback =  function(obj) {
+  const element = document.getElementById("light-position");
+  window.robotWindow.send(`light-position:${element.children[0].value},${element.children[1].value},${element.children[2].value}`);
+}
 
-  if (parseFloat(obj.value) > 0.5)
-    obj.value = 0.5
-  if (parseFloat(obj.value) < -1.5)
-    obj.value = -1.5
-
-  window.robotWindow.send(`light-position:${obj.value}`);
+window.lightIntensityInputCallback =  function(obj) {
+  window.robotWindow.send(`light-intensity:${obj.value}`);
 }
 
 window.lightColorInputCallback =  function(obj) {
