@@ -1,15 +1,67 @@
 import RobotWindow from 'https://cyberbotics.com/wwi/R2023a/RobotWindow.js';
 
-window.spawnerButtonCallback =  function(obj) {
-  const collection = document.getElementsByClassName("spawner-option");
-  for (let i = 0; i < collection.length; ++i)
-    collection[i].style.background = "white"
-
-  obj.style.background = "cyan";
-
-  console.log('spawn:' + obj.innerText);
-  window.robotWindow.send('spawn:' + obj.innerText);
+const DEFAULT_LOCATIONS = {
+  'Keyboard': {'translation': [-0.6, 0.5, 0.53], 'rotation': [0, 1, 0, -0.12]},
+  'Laptop': {'translation': [-0.58, 0.5, 0.5], 'rotation': [0, 0, 1, -2.16]},
+  'BeerBottle': {'translation': [-0.42, 0.49, 0.5], 'rotation': [0, 0, 1, -2.16]},
+  'Cat': {'translation': [-0.57, 0.40, 0.56], 'rotation': [0, 0, 1, 2.62]},
+  'FlowerPot': {'translation': [-0.67, 0.51, 0.53], 'rotation': [0, 0, 1, 0]},
+  'Clock': {'translation': [-0.54, 0.46, 0.67], 'rotation': [0, 0, 1, 2.62]},
+  'TennisRacket': {'translation': [-0.53, 0.42, 0.62], 'rotation': [-0.07, -0.8, -0.6, 1.04]},
 }
+
+window.spawnerButtonCallback =  function(obj) {
+  if (obj.style.background === "cyan") {
+    obj.style.background = "white"
+    window.robotWindow.send(`${obj.innerText}:0,0,-2`);
+    const display = document.getElementById('display');
+    display.removeChild(document.getElementById(obj.innerText));
+  } else {
+    obj.style.background = "cyan";
+
+    const t = DEFAULT_LOCATIONS[obj.innerText]['translation'];
+    const r = DEFAULT_LOCATIONS[obj.innerText]['rotation'];
+    createPositionInput(obj.innerText, t);
+    console.log(`${obj.innerText}:${t[0]},${t[1]},${t[2]}|${r[0]},${r[1]},${r[2]},${r[3]}`)
+    window.robotWindow.send(`${obj.innerText}:${t[0]},${t[1]},${t[2]}|${r[0]},${r[1]},${r[2]},${r[3]}`);
+  }
+}
+
+function createPositionInput(name, value) {
+  const label = document.createElement('label');
+  label.id = name;
+  label.innerText = name + ': ';
+
+  const x = createCell(name, 0.1, 'number', value[0]);
+  const y = createCell(name, 0.1, 'number', value[1]);
+  const z = createCell(name, 0.1, 'number', value[2]);
+
+  label.appendChild(x);
+  label.appendChild(y);
+  label.appendChild(z);
+  label.appendChild(document.createElement('br'))
+
+  const display = document.getElementById('display');
+  display.appendChild(label);
+}
+
+function createCell(name, step, type, value) {
+  const input = document.createElement('input');
+  input.step = step;
+  input.type = type;
+  input.value = value;
+  input.style = 'width:50px';
+  input.onchange = () => positionCallback(name);
+
+  return input;
+}
+
+function positionCallback(name) {
+  const element = document.getElementById(name);
+  console.log(`${name}:${element.children[0].value},${element.children[1].value},${element.children[2].value}`)
+  window.robotWindow.send(`${name}:${element.children[0].value},${element.children[1].value},${element.children[2].value}`);
+}
+
 
 window.noiseInputCallback =  function(obj) {
 
@@ -42,6 +94,11 @@ window.lensRadialInputCallback =  function() {
 window.lightPositionInputCallback =  function(obj) {
   const element = document.getElementById("light-position");
   window.robotWindow.send(`light-position:${element.children[0].value},${element.children[1].value},${element.children[2].value}`);
+}
+
+window.objectPositionInputCallback =  function(obj) {
+  const element = document.getElementById("object-position");
+  window.robotWindow.send(`object-position:${element.children[0].value},${element.children[1].value},${element.children[2].value}`);
 }
 
 window.lightIntensityInputCallback =  function(obj) {

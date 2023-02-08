@@ -36,8 +36,8 @@ WorldInfo {
 }
 Viewpoint {
   fieldOfView 0.5
-  orientation -0.282215050834881 0.7872029987158445 0.5483302872311976 1.149944103758308
-  position -6.769375567773776 -4.582130852612174 11.946518037874705
+  orientation 0.2335300222100024 0.41872618793859656 -0.8775717111786404 1.1419756580556892
+  position -4.750243158528276 7.80544898922402 5.761048981269504
   near 1
   follow "TIAGo Iron"
   followType "None"
@@ -437,6 +437,7 @@ JetBot {
   }
   extensionSlot [
     Display {
+      name "custom_display"
       width 640
       height 480
     }

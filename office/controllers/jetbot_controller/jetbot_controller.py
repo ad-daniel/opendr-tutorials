@@ -21,15 +21,6 @@ import base64
 
 TIMESTEP = 64
 DISPLAY_IMAGE_PATH = os.getcwd() + '/display.jpg'
-LOCATIONS = {
-    'Keyboard': [-0.6, 0.5, 0.53],
-    'Laptop': [-0.58, 0.5, 0.5],
-    'BeerBottle': [-0.42, 0.49, 0.5],
-    'Cat': [-0.57, 0.40, 0.56],
-    'FlowerPot': [-0.67, 0.51, 0.53],
-    'Clock': [-0.54, 0.46, 0.67],
-    'TennisRacket': [-0.53, 0.42, 0.62]
-}
 
 
 def send_image_to_display(robot, display):
@@ -40,26 +31,33 @@ def send_image_to_display(robot, display):
 
 
 def handle_wwi_messages():
-    global current_object
     message = robot.wwiReceiveText()
     while message:
-        if message.startswith('spawn:'):
-            name = message[6:]
-            if current_object:  # hide current object
-                robot.getFromDef(current_object).getField('translation').setSFVec3f([0, 0, -2])
-            current_object = name.upper()
-            robot.getFromDef(current_object).getField('translation').setSFVec3f(LOCATIONS[name])
-        elif message.startswith('noise:'):
+        root = message.split(':')[0]
+        if root in ['Keyboard', 'Laptop', 'BeerBottle', 'Cat', 'FlowerPot', 'Clock', 'TennisRacket']:
+            node = robot.getFromDef(root.upper())
+            try:
+              translation_string = message[message.index(':') + 1:message.index('|')]
+              rotation_string = message[message.index('|') + 1:]
+            except:
+              translation_string = message[message.index(':') + 1:]
+              rotation_string = None
+
+            node.getField('translation').setSFVec3f([float(x) for x in translation_string.split(',')])
+            if rotation_string:
+                rotation = [float(x) for x in message[message.index('|') + 1:].split(',')]
+                node.getField('rotation').setSFRotation(rotation)
+        elif root == 'noise':
             noise_field.setSFFloat(float(message[6:]))
-        elif message.startswith('radial-coefficient:'):
+        elif root == 'radial-coefficient':
             value = [float(x) for x in message[19:].split(',')]
             lens_field.setSFVec2f(value)
-        elif message.startswith('light-position:'):
+        elif root == 'light-position':
             value = [float(x) for x in message[15:].split(',')]
             light_location_field.setSFVec3f(value)
-        elif message.startswith('light-intensity:'):
+        elif root == 'light-intensity':
             light_intensity_field.setSFFloat(float(message[16:]))
-        elif message.startswith('light-color:'):
+        elif root == 'light-color':
             value = [float(x) for x in message[12:].split(',')]
             light_color_field.setSFColor(value)
         message = robot.wwiReceiveText()
@@ -72,7 +70,7 @@ camera = Camera('camera')
 camera.enable(2 * TIMESTEP)
 width, height = camera.getWidth(), camera.getHeight()
 
-display = robot.getDevice('display')
+display = robot.getDevice('custom_display')
 display.setFont('Lucida Console', 16, True)
 
 # get node/field references
@@ -91,8 +89,6 @@ robot.step(TIMESTEP)
 # prepare Nanodet learner
 learner = NanodetLearner(model_to_use='m', device='cpu')
 learner.load("./nanodet_m", verbose=True)
-print(learner.classes)
-current_object = None
 
 while robot.step(TIMESTEP) != -1:
     handle_wwi_messages()  # handle messages from robot window

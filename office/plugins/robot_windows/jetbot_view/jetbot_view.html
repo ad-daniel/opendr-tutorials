@@ -10,17 +10,21 @@
     <div id='display' class='wrapper webotsTabs'>
       <h2>Camera</h2>
       <img id='robot-display' alt='Image not available. Please start the simulation.' width="640" height="480">
-      <h2>Spawner</h2>
+      <h2>Object controls</h2>
       <button class="spawner-option" onclick="spawnerButtonCallback(this)">Keyboard</button>
       <button class="spawner-option" onclick="spawnerButtonCallback(this)">BeerBottle</button>
       <button class="spawner-option" onclick="spawnerButtonCallback(this)">Laptop</button>
       <button class="spawner-option" onclick="spawnerButtonCallback(this)">Cat</button>
       <button class="spawner-option" onclick="spawnerButtonCallback(this)">FlowerPot</button>
       <button class="spawner-option" onclick="spawnerButtonCallback(this)">Clock</button>
-      <button class="spawner-option" onclick="spawnerButtonCallback(this)">TennisRacket</button>
+      <button class="spawner-option" onclick="spawnerButtonCallback(this)">TennisRacket</button><br><br>
+    </div>
+    <div>
       <h2>Camera controls</h2>
       <label id="noise-level">Camera noise: <input onchange="noiseInputCallback(this)" step="0.025" type="number" style="width:50px" value="0"></label><br>
       <label id="lens-radial-coefficient">Lens radial coefficient: x <input onchange="lensRadialInputCallback(this)" step="0.1" type="number" style="width:50px" value="0"> y <input onchange="lensRadialInputCallback(this)" step="0.1" type="number" style="width:50px" value="0"></label>
+    </div>
+    <div>
       <h2>Light controls</h2>
       <label id="light-position">Light position: x <input onchange="lightPositionInputCallback(this)" step="0.5" type="number" style="width:50px" value="0"> y <input onchange="lightPositionInputCallback(this)" step="0.5" type="number" style="width:50px" value="0.5"> z <input onchange="lightPositionInputCallback(this)" step="0.5" type="number" style="width:50px" value="2"></label><br>
       <label id="light-intensity">Light intensity: <input onchange="lightIntensityInputCallback(this)" step="0.5" type="number" style="width:50px" value="3"></label><br>
