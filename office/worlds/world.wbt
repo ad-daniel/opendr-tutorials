@@ -30,8 +30,9 @@ IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R20
 
 WorldInfo {
   info [
-    "An office break room, surrounded by office desks."
+    "Jetbot in an office environment"
   ]
+  title "OpenDR 2d object detection demo"
   basicTimeStep 64
 }
 Viewpoint {
