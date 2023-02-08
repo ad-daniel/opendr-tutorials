@@ -20,26 +20,24 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/project
 IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/computers/protos/Keyboard.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/chairs/protos/OfficeChair.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/robots/nvidia/jetbot/protos/JetBot.proto"
-IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/drinks/protos/WaterBottle.proto"
 IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/drinks/protos/BeerBottle.proto"
-IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/drinks/protos/Can.proto"
-IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/school_furniture/protos/Book.proto"
+IMPORTABLE EXTERNPROTO "../protos/TennisRacket.proto"
 EXTERNPROTO "../protos/CustomJetBotRaspberryPiCamera.proto"
 IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/animals/protos/Cat.proto"
-IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/computers/protos/Laptop.proto"
+IMPORTABLE EXTERNPROTO "../protos/Laptop.proto"
 IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/plants/protos/FlowerPot.proto"
-IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/balls/protos/SoccerBall.proto"
 IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/school_furniture/protos/Clock.proto"
 
 WorldInfo {
   info [
     "An office break room, surrounded by office desks."
   ]
+  basicTimeStep 64
 }
 Viewpoint {
   fieldOfView 0.5
-  orientation 0.2599854046862813 0.5001128692113908 -0.8260113240139393 1.1321825403094918
-  position -4.569006935149849 6.208939250596805 5.68817689696707
+  orientation 0.2422960378048716 0.5294219059130788 -0.8130221864152436 1.0347669812422486
+  position -6.557890183061742 7.115974711644057 6.714175553012122
   near 1
   follow "TIAGo Iron"
   followType "None"
@@ -548,13 +546,35 @@ Solid {
   ]
   name "solid(1)"
 }
-Solid {
-  translation -4.16 -1.55 -0.14
-  children [
-    Book {
-      translation -0.866141 0.47882 0.84
-      rotation 0 0 -1 -0.7854053071795866
-      mass 1
-    }
-  ]
+DEF LAPTOP Laptop {
+  translation 0 0 -2
+  rotation 0 0 1 -2.16
+  controller "<none>"
+  mass 0
+}
+DEF KEYBOARD Keyboard {
+  translation 0 0 -2
+  rotation 0 1 0 -0.12
+  name "keyboard(1)"
+}
+DEF BEERBOTTLE BeerBottle {
+  translation 0 0 -2
+  rotation 0 0 1 -2.62
+  mass 0
+}
+DEF CAT Cat {
+  translation 0 0 -2
+  rotation 0 0 1 2.61779
+  scale 0.75
+}
+DEF FLOWERPOT FlowerPot {
+  translation 0 0 -2
+}
+DEF CLOCK Clock {
+  translation 0 0 -2
+  rotation 0 0 1 2.62
+}
+DEF TENNISRACKET TennisRacket {
+  translation 0 0 -2
+  rotation -0.07 -0.79 -0.6 1.04
 }
