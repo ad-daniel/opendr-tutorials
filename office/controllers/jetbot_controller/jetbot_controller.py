@@ -122,7 +122,11 @@ while robot.step(TIMESTEP) != -1:
         display.drawText(learner.classes[bounding_box['category_id']], current_detection[0], current_detection[1] - 20)
         display.setColor(0xFF0000)
 
+<<<<<<< HEAD
         # print('class:', learner.classes[bounding_box['category_id']], 'confidence:', box.confidence)
+=======
+        print('class:', learner.classes[bounding_box['category_id']], 'confidence:', box.confidence)
+>>>>>>> 78a0a06fd59f7484c0e88d05d91ddf6aaf3f79f8
 
     send_image_to_display(robot, display)
     display.imageDelete(ir)
