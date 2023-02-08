@@ -30,19 +30,19 @@ window.spawnerButtonCallback =  function(obj) {
 function createPositionInput(name, value) {
   const label = document.createElement('label');
   label.id = name;
-  label.innerText = name + ': ';
+  label.innerText = name;
 
   const x = createCell(name, 0.1, 'number', value[0]);
   const y = createCell(name, 0.1, 'number', value[1]);
   const z = createCell(name, 0.1, 'number', value[2]);
 
-  label.appendChild(x);
-  label.appendChild(y);
-  label.appendChild(z);
-  label.appendChild(document.createElement('br'))
-
   const display = document.getElementById('display');
   display.appendChild(label);
+  display.appendChild(x);
+  display.appendChild(y);
+  display.appendChild(z);
+  display.appendChild(document.createElement('br'))
+
 }
 
 function createCell(name, step, type, value) {
