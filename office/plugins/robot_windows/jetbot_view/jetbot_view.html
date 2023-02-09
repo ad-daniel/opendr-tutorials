@@ -31,12 +31,10 @@
 <body style="background-color: #aeb6bf ;">
   <div id='display' class='wrapper webotsTabs'>
     <h2>Camera</h2>
-    <hr>
-    <img id='robot-display' alt='Image not available. Please start the simulation.' width="640" height="480">
+    <img id='robot-display' alt='Awaiting camera feed.' width="640" height="480">
   </div>
   <div>
     <h2>Object controls</h2>
-    <hr>
     <div class=" grid-container">
       <!--<button class="spawner-option" onclick="spawnerButtonCallback(this)">Keyboard</button>-->
       <button class="spawner-option" onclick="spawnerButtonCallback(this)">BeerBottle</button>
@@ -52,7 +50,6 @@
   </div>
   <div>
     <h2>Camera controls</h2>
-    <hr>
     <label id="noise-level">Camera noise</label><input onchange="noiseInputCallback(this)" step="0.025" type="number"
       style="width:50px" value="0" /><br>
     <label id="lens-radial-coefficient">Lens radial coef.</label><input onchange="lensRadialInputCallback(this)"
@@ -61,11 +58,10 @@
   </div>
   <div>
     <h2>Light controls</h2>
-    <hr>
-    <label id="light-position">Light position</label><input onchange="lightPositionInputCallback(this)" step="0.5"
-      type="number" style="width:50px" value="0" /><input onchange="lightPositionInputCallback(this)" step="0.5"
-      type="number" style="width:50px" value="0.5" /><input onchange="lightPositionInputCallback(this)" step="0.5"
-      type="number" style="width:50px" value="2" /><br>
+    <span id="light-position"><label>Light position</label><input onchange="lightPositionInputCallback(this)" step="0.5"
+        type="number" style="width:50px" value="0" /><input onchange="lightPositionInputCallback(this)" step="0.5"
+        type="number" style="width:50px" value="0.5" /><input onchange="lightPositionInputCallback(this)" step="0.5"
+        type="number" style="width:50px" value="2" /><br></span>
     <label id="light-intensity">Light intensity</label><input onchange="lightIntensityInputCallback(this)" step="0.5"
       type="number" style="width:50px" value="3" /><br>
     <label id="light-color">Light color</label><input onchange="lightColorInputCallback(this)" step="0.5" type="color"

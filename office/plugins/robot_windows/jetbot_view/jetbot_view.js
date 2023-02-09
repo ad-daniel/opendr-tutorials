@@ -98,13 +98,9 @@ window.lensRadialInputCallback = function () {
 
 window.lightPositionInputCallback = function (obj) {
   const element = document.getElementById("light-position");
-  window.robotWindow.send(`light-position:${element.children[0].value},${element.children[1].value},${element.children[2].value}`);
+  window.robotWindow.send(`light-position:${element.children[1].value},${element.children[2].value},${element.children[3].value}`);
 }
 
-window.objectPositionInputCallback = function (obj) {
-  const element = document.getElementById("object-position");
-  window.robotWindow.send(`object-position:${element.children[0].value},${element.children[1].value},${element.children[2].value}`);
-}
 
 window.lightIntensityInputCallback = function (obj) {
   window.robotWindow.send(`light-intensity:${obj.value}`);
