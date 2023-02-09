@@ -37,9 +37,9 @@ function createPositionInput(name, value) {
   label.className = name;
   label.innerText = name;
 
-  const x = createCell(name, 0.1, 'number', value[0]);
-  const y = createCell(name, 0.1, 'number', value[1]);
-  const z = createCell(name, 0.1, 'number', value[2]);
+  const x = createCell(name, 0.1, 'number', value[0], span);
+  const y = createCell(name, 0.1, 'number', value[1], span);
+  const z = createCell(name, 0.1, 'number', value[2], span);
 
 
   const div = document.getElementById('object-controls');
@@ -48,26 +48,23 @@ function createPositionInput(name, value) {
   span.appendChild(y);
   span.appendChild(z);
   div.appendChild(span);
-
-  //div.appendChild(document.createElement('br'))
 }
 
-function createCell(name, step, type, value) {
+function createCell(name, step, type, value, element) {
   const input = document.createElement('input');
   input.className = name;
   input.step = step;
   input.type = type;
   input.value = value;
   input.style = 'width:50px';
-  input.onchange = () => positionCallback(name);
+  input.onchange = () => positionCallback(element);
 
   return input;
 }
 
-function positionCallback(name) {
-  const element = document.getElementById(name);
-  console.log(`${name}:${element.children[0].value},${element.children[1].value},${element.children[2].value}`)
-  window.robotWindow.send(`${name}:${element.children[0].value},${element.children[1].value},${element.children[2].value}`);
+function positionCallback(element) {
+  console.log(`${element.className}:${element.children[1].value},${element.children[2].value},${element.children[3].value}`)
+  window.robotWindow.send(`${element.className}:${element.children[1].value},${element.children[2].value},${element.children[3].value}`);
 }
 
 
