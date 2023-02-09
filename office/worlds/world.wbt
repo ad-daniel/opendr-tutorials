@@ -30,9 +30,11 @@ IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R20
 
 WorldInfo {
   info [
-    "Jetbot in an office environment"
+    "Powered by the OpenDR toolkit."
+    ""
+    "This project has received funding from the European Union's Horizon 2020 research and innovation programme under grant agreement No 871449."
   ]
-  title "OpenDR 2d object detection demo"
+  title "OpenDR 2d object detection"
   basicTimeStep 64
 }
 Viewpoint {
