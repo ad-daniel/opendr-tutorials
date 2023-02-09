@@ -5,7 +5,7 @@ const DEFAULT_LOCATIONS = {
   'Laptop': { 'translation': [-0.58, 0.5, 0.5], 'rotation': [0, 0, 1, -2.16] },
   'BeerBottle': { 'translation': [-0.42, 0.49, 0.5], 'rotation': [0, 0, 1, -2.16] },
   'Cat': { 'translation': [-0.57, 0.40, 0.56], 'rotation': [0, 0, 1, 2.62] },
-  'FlowerPot': { 'translation': [-0.67, 0.51, 0.53], 'rotation': [0, 0, 1, 0] },
+  'FlowerPot': { 'translation': [-0.67, 0.3, 0.53], 'rotation': [0, 0, 1, 0] },
   'Clock': { 'translation': [-0.54, 0.46, 0.67], 'rotation': [0, 0, 1, 2.62] },
   'TennisRacket': { 'translation': [-0.53, 0.42, 0.62], 'rotation': [-0.07, -0.8, -0.6, 1.04] },
 }
