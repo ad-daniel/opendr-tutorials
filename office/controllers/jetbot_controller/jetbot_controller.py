@@ -41,13 +41,14 @@ def send_ground_truth(robot, camera):
 def handle_wwi_messages():
     message = robot.wwiReceiveText()
     while message:
+        print(message)
         root = message.split(':')[0]
         if root in ['Keyboard', 'Laptop', 'BeerBottle', 'Cat', 'FlowerPot', 'Clock', 'TennisRacket']:
             node = robot.getFromDef(root.upper())
             try:
               translation_string = message[message.index(':') + 1:message.index('|')]
               rotation_string = message[message.index('|') + 1:]
-            except:
+            except Exception:
               translation_string = message[message.index(':') + 1:]
               rotation_string = None
 

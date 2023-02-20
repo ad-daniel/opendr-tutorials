@@ -30,15 +30,17 @@ IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R20
 
 WorldInfo {
   info [
-    "Jetbot in an office environment"
+    "Powered by the OpenDR toolkit."
+    ""
+    "This project has received funding from the European Union's Horizon 2020 research and innovation programme under grant agreement No 871449."
   ]
-  title "OpenDR 2d object detection demo"
+  title "OpenDR 2d object detection"
   basicTimeStep 64
 }
 Viewpoint {
   fieldOfView 0.5
   orientation 0.2335300222100024 0.41872618793859656 -0.8775717111786404 1.1419756580556892
-  position -4.750243158528276 7.80544898922402 5.761048981269504
+  position -5.37741836316646 8.078566572283163 6.080663432349334
   near 1
   follow "TIAGo Iron"
   followType "None"
