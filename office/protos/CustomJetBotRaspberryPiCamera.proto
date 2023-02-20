@@ -94,6 +94,9 @@ PROTO CustomJetBotRaspberryPiCamera [
         noiseMaskUrl IS noiseMaskUrl
         lens IS lens
         lensFlare IS lensFlare
+        recognition Recognition {
+          segmentation TRUE
+        }
       }
     ]
   }

@@ -20,6 +20,7 @@ PROTO Laptop [
     controller IS controller
     window IS window
     supervisor IS supervisor
+    recognitionColors [0 1 0]
     children [
       HingeJoint {
         jointParameters HingeJointParameters {

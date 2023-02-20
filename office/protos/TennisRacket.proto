@@ -16,5 +16,6 @@ PROTO TennisRacket [
         url "meshes/TennisRacket.obj"
       }
     ]
+    recognitionColors [1 0 0]
   }
 }

@@ -25,7 +25,7 @@ IMPORTABLE EXTERNPROTO "../protos/TennisRacket.proto"
 EXTERNPROTO "../protos/CustomJetBotRaspberryPiCamera.proto"
 IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/animals/protos/Cat.proto"
 IMPORTABLE EXTERNPROTO "../protos/Laptop.proto"
-IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/plants/protos/FlowerPot.proto"
+IMPORTABLE EXTERNPROTO "../protos/CustomFlowerPot.proto"
 IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/school_furniture/protos/Clock.proto"
 
 WorldInfo {
@@ -565,7 +565,7 @@ DEF CAT Cat {
   rotation 0 0 1 2.61779
   scale 0.75
 }
-DEF FLOWERPOT FlowerPot {
+DEF FLOWERPOT CustomFlowerPot {
   translation 0 0 -2
 }
 DEF CLOCK Clock {

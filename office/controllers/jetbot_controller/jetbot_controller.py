@@ -21,6 +21,7 @@ import base64
 
 TIMESTEP = 64
 DISPLAY_IMAGE_PATH = os.getcwd() + '/display.jpg'
+GROUND_TRUTH_PATH = os.getcwd() + '/ground_truth.jpg'
 
 
 def send_image_to_display(robot, display):
@@ -28,6 +29,13 @@ def send_image_to_display(robot, display):
     with open(DISPLAY_IMAGE_PATH, 'rb') as f:
         fileString64 = base64.b64encode(f.read()).decode()
         robot.wwiSendText('image[display]]:data:image/jpeg;base64,' + fileString64)
+
+
+def send_ground_truth(robot, camera):
+    camera.saveRecognitionSegmentationImage(GROUND_TRUTH_PATH, 90)
+    with open(GROUND_TRUTH_PATH, 'rb') as f:
+        fileString64 = base64.b64encode(f.read()).decode()
+        robot.wwiSendText('ground-truth:data:image/jpeg;base64,' + fileString64)
 
 
 def handle_wwi_messages():
@@ -68,6 +76,8 @@ robot = Supervisor()
 # enable devices
 camera = Camera('camera')
 camera.enable(2 * TIMESTEP)
+camera.recognitionEnable(2 * TIMESTEP)
+camera.enableRecognitionSegmentation()
 width, height = camera.getWidth(), camera.getHeight()
 
 display = robot.getDevice('custom_display')
@@ -124,6 +134,7 @@ while robot.step(TIMESTEP) != -1:
         # print('class:', learner.classes[bounding_box['category_id']], 'confidence:', box.confidence)
 
     send_image_to_display(robot, display)
+    send_ground_truth(robot, camera)
     display.imageDelete(ir)
 
 # cleanup

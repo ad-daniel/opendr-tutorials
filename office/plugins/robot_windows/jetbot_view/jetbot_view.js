@@ -27,6 +27,26 @@ window.spawnerButtonCallback =  function(obj) {
   }
 }
 
+window.savePicture = function(obj) {
+    const element = document.createElement('a');
+    element.setAttribute('href', imageData);
+    element.setAttribute('download', 'capture.jpg');
+
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+}
+
+window.saveGroundTruth = function(obj) {
+  const element = document.createElement('a');
+  element.setAttribute('href', groundTruth);
+  element.setAttribute('download', 'ground_truth.jpg');
+
+  document.body.appendChild(element);
+  element.click();
+  document.body.removeChild(element);
+}
+
 function createPositionInput(name, value) {
   const label = document.createElement('label');
   label.id = name;
@@ -114,18 +134,25 @@ window.lightColorInputCallback =  function(obj) {
   window.robotWindow.send(`light-color:${red},${green},${blue}`);
 }
 
+let imageData;
+let groundTruth;
+
 // Initialize the RobotWindow class in order to communicate with the robot.
 window.onload = function() {
   console.log('HTML page loaded.');
   window.robotWindow = new RobotWindow();
   window.robotWindow.setTitle('JetBot robot window');
   window.robotWindow.receive = function(message, robot) {
+    console.log('message', message)
     // image format: image[<device name>]:<URI image data>
     if (message.startsWith('image')) {
       const label = message.substring(message.indexOf('[') + 1, message.indexOf(']'));
       const imageElement = document.getElementById('robot-' + label);
+      imageData = message.substring(message.indexOf(':') + 1);
       if (imageElement != null)
-        imageElement.setAttribute('src', message.substring(message.indexOf(':') + 1));
+        imageElement.setAttribute('src', imageData);
+    } else if (message.startsWith('ground-truth')) {
+      groundTruth = message.substring(message.indexOf(':') + 1);
     } else {
       if (message.length > 200)
         message = message.substr(0, 200);
