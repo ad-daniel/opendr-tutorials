@@ -15,9 +15,11 @@
 from controller import Supervisor, Display, Camera
 from opendr.engine.data import Image
 from opendr.perception.object_detection_2d import NanodetLearner
+from opendr.perception.object_detection_2d import draw_bounding_boxes
 import numpy as np
 import os
 import base64
+import cv2
 
 TIMESTEP = 64
 DISPLAY_IMAGE_PATH = os.getcwd() + '/display.jpg'
@@ -29,6 +31,16 @@ def send_image_to_display(robot, display):
     with open(DISPLAY_IMAGE_PATH, 'rb') as f:
         fileString64 = base64.b64encode(f.read()).decode()
         robot.wwiSendText('image[display]]:data:image/jpeg;base64,' + fileString64)
+
+
+def send_images_to_robot_window(robot, detection, ground_truth):
+    _, encoded_detection = cv2.imencode('.png', detection)
+    fileString64 = base64.b64encode(encoded_detection.tobytes()).decode()
+    robot.wwiSendText('image[display]:data:image/png;base64,' + fileString64)
+
+    _, encoded_ground_truth = cv2.imencode('.png', ground_truth)
+    fileString64 = base64.b64encode(encoded_ground_truth.tobytes()).decode()
+    robot.wwiSendText('ground-truth:data:image/png;base64,' + fileString64)
 
 
 def send_ground_truth(robot, camera):
@@ -107,6 +119,9 @@ while robot.step(TIMESTEP) != -1:
     image = camera.getImage()
     frame = np.frombuffer(image, np.uint8).reshape((height, width, 4))
 
+    segmentation = camera.getRecognitionSegmentationImage()
+    ground_truth = np.frombuffer(segmentation, np.uint8).reshape((height, width, 4))
+
     if current_detection:
         # erase the previous drawing by setting the pixels alpha value to 0 (transparent).
         display.setAlpha(0.0)
@@ -118,7 +133,7 @@ while robot.step(TIMESTEP) != -1:
 
     # copy raw image into display
     ir = display.imageNew(image, Display.BGRA, width, height)
-    display.imagePaste(ir, 0, 0, False)
+    # display.imagePaste(ir, 0, 0, False)
 
     for box in result:
         bounding_box = box.coco()
@@ -126,17 +141,23 @@ while robot.step(TIMESTEP) != -1:
             continue
         # draw detection box in the display image
         current_detection = bounding_box['bbox']
-        display.setAlpha(1.0)
-        display.setColor(0x00FFFF)
-        display.drawRectangle(current_detection[0], current_detection[1], current_detection[2], current_detection[3])
-        display.drawText(learner.classes[bounding_box['category_id']], current_detection[0], current_detection[1] - 20)
-        display.setColor(0xFF0000)
+        c1 = (int(current_detection[0]), int(current_detection[1]))
+        c2 = (c1[0] + int(current_detection[2]), c1[1] + int(current_detection[3]))
+        color = (36, 255, 12)
+        frame = cv2.rectangle(frame, c1, c2, color, 2)
+        frame = cv2.putText(frame, learner.classes[bounding_box['category_id']], (c1[0], c1[1] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 2)
+        #display.setAlpha(1.0)
+        #display.setColor(0x00FFFF)
+        #display.drawRectangle(current_detection[0], current_detection[1], current_detection[2], current_detection[3])
+        #display.drawText(learner.classes[bounding_box['category_id']], current_detection[0], current_detection[1] - 20)
+        #display.setColor(0xFF0000)
 
         # print('class:', learner.classes[bounding_box['category_id']], 'confidence:', box.confidence)
 
-    send_image_to_display(robot, display)
-    send_ground_truth(robot, camera)
-    display.imageDelete(ir)
+    #send_image_to_display(robot, display)
+    send_images_to_robot_window(robot, frame, ground_truth)
+    #send_ground_truth(robot, camera)
+    #display.imageDelete(ir)
 
 # cleanup
 if (os.path.exists(DISPLAY_IMAGE_PATH)):

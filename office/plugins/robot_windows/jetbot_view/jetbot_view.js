@@ -27,20 +27,20 @@ window.spawnerButtonCallback = function (obj) {
   }
 }
 
-window.savePicture = function(obj) {
-    const element = document.createElement('a');
-    element.setAttribute('href', imageData);
-    element.setAttribute('download', 'capture.jpg');
+window.savePicture = function (obj) {
+  const element = document.createElement('a');
+  element.setAttribute('href', imageData);
+  element.setAttribute('download', 'capture.png');
 
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
+  document.body.appendChild(element);
+  element.click();
+  document.body.removeChild(element);
 }
 
-window.saveGroundTruth = function(obj) {
+window.saveGroundTruth = function (obj) {
   const element = document.createElement('a');
   element.setAttribute('href', groundTruth);
-  element.setAttribute('download', 'ground_truth.jpg');
+  element.setAttribute('download', 'ground_truth.png');
 
   document.body.appendChild(element);
   element.click();
