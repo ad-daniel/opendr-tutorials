@@ -8,7 +8,7 @@ orthographicViewHeight: 1
 textFiles: -1
 robotWindow: JetBot
 consoles: Console:All:All
-renderingDevicePerspectives: JetBot:camera;1;1;0;0
-renderingDevicePerspectives: JetBot:custom_display;1;1;0.201515;0.0981241
+renderingDevicePerspectives: JetBot:camera;1;0.895833;0;0
+renderingDevicePerspectives: JetBot:custom_display;1;0.807522;0.201515;0.0981241
 renderingDevicePerspectives: JetBot:display;1;1;0;0
 renderingDevicePerspectives: laptop:display;1;1;0;0
